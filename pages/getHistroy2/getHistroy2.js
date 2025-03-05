@@ -237,7 +237,7 @@ Page({
       let token = this.data.token;
 
       dd.httpRequest({
-        url:  'https://yz-znpk.966599.com/getManagerInventoryRecords/?earliest_year=' + d1.getFullYear()+'&earliest_mon=' + m1 +"&earliest_day=" + d1.getDate() + "&latest_year=" + d2.getFullYear() + "&latest_mon=" + m2 + "&latest_day=" + d2.getDate() +"&Id_manager=" + id,
+        url:  'https://localhost:8080/getManagerInventoryRecords/?earliest_year=' + d1.getFullYear()+'&earliest_mon=' + m1 +"&earliest_day=" + d1.getDate() + "&latest_year=" + d2.getFullYear() + "&latest_mon=" + m2 + "&latest_day=" + d2.getDate() +"&Id_manager=" + id,
         method: 'GET',
         headers:{ 'Authorization' : 'Bearer ' + token },
         timeout: 30000,

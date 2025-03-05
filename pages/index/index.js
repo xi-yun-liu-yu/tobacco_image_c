@@ -174,7 +174,7 @@ Page({
   onReady() {
     // 页面加载完成
     dd.httpRequest({
-      url:  'https://yz-znpk.966599.com/getAllProducts/',
+      url:  'https://localhost:8080/getAllProducts/',
       data: {},
       method: 'GET',
       headers:{ 'Authorization' : 'Bearer ' + this.data.token },
@@ -887,7 +887,7 @@ Page({
   uploadToServer(filePath) {
     return new Promise((resolve, reject) => {
       dd.uploadFile({
-        url: 'https://yz-znpk.966599.com/upload/', // 确保URL是正确的
+        url: 'https://localhost:8080/upload/', // 确保URL是正确的
         headers: { 'Authorization' : 'Bearer ' + this.data.token },
         fileType: 'image',
         fileName: 'file',
@@ -1468,7 +1468,7 @@ Page({
         console.log(res)
         if(confirm){
           dd.httpRequest({
-            url: 'https://yz-znpk.966599.com/upRecord/',
+            url: 'https://localhost:8080/upRecord/',
             method: 'post',
             data: JSON.stringify(dataArray),
             headers: { 'Authorization' : 'Bearer ' + this.data.token },

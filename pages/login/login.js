@@ -200,7 +200,7 @@ Page({
       complete: () => {},
     });
     dd.httpRequest({
-      url: 'https://yz-znpk.966599.com/register/',
+      url: 'https://localhost:8080/register/',
       data: JSON.stringify({ Id_status: acc, password: cod }),
       method: 'POST',
       headers: {  'Content-Type': 'application/json'  },
@@ -213,7 +213,7 @@ Page({
         });
         let id = acc;
         dd.httpRequest({
-          url: 'https://yz-znpk.966599.com/sign/',
+          url: 'https://localhost:8080/sign/',
           data: JSON.stringify({ username: acc, password: cod }),
           
           method: 'POST',
@@ -229,7 +229,7 @@ Page({
             if(res.data["code"] === 0){
               if(res.data.data["authority"] <= 0){
                 dd.httpRequest({
-                  url: 'https://yz-znpk.966599.com/getManagerInfo/',
+                  url: 'https://localhost:8080/getManagerInfo/',
                   method: 'GET',
                   headers: { 'Authorization' : 'Bearer ' + res.data["token"] },
                   timeout: 30000,
@@ -262,7 +262,7 @@ Page({
               }else if(res.data.data["authority"] == 1){
                 // console.log(99)
                 dd.httpRequest({
-                  url: 'https://yz-znpk.966599.com/getDealerList/',
+                  url: 'https://localhost:8080/getDealerList/',
                   method: 'GET',
                   headers: { 'Authorization' : 'Bearer ' + res.data["token"] },
                   timeout: 30000,
@@ -340,7 +340,7 @@ Page({
               }else if(res.data.data["authority"] == 2){
                 let ManagerList ;
                 dd.httpRequest({
-                  url: 'https://yz-znpk.966599.com/getAreaManagerList/',
+                  url: 'https://localhost:8080/getAreaManagerList/',
                   method: 'GET',
                   headers: { 'Authorization' : 'Bearer ' + res.data["token"] },
                   timeout: 30000,
@@ -350,7 +350,7 @@ Page({
                   }
                 });
                 dd.httpRequest({
-                  url: 'https://yz-znpk.966599.com/getAreaDealerList/',
+                  url: 'https://localhost:8080/getAreaDealerList/',
                   method: 'GET',
                   headers: { 'Authorization' : 'Bearer ' + res.data["token"] },
                   timeout: 30000,
@@ -432,7 +432,7 @@ Page({
               }else if(res.data.data["authority"] == 3){
                 let ManagerList ;
                 dd.httpRequest({
-                  url: 'https://yz-znpk.966599.com/getAllManagerList/',
+                  url: 'https://localhost:8080/getAllManagerList/',
                   method: 'GET',
                   headers: { 'Authorization' : 'Bearer ' + res.data["token"] },
                   timeout: 30000,
@@ -442,7 +442,7 @@ Page({
                   }
                 });
                 dd.httpRequest({
-                  url: 'https://yz-znpk.966599.com/getAllDealerList/',
+                  url: 'https://localhost:8080/getAllDealerList/',
                   method: 'GET',
                   headers: { 'Authorization' : 'Bearer ' + res.data["token"] },
                   timeout: 30000,
@@ -606,7 +606,7 @@ Page({
     });
     dd.httpRequest({
       // url: 'http://10.11.0.63:8080/sign/',
-      url: 'https://yz-znpk.966599.com/sign/',
+      url: 'https://localhost:8080/sign/',
       //url: 'https://ql.966599.com/api/qsource/9616d09b-f4e1-4078-ad03-9d4fe4967d0a',
 
       data: JSON.stringify({ username: acc, password: cod }),
@@ -635,7 +635,7 @@ Page({
           let token = "&token=" + res.data["token"];
           if(res.data.data["authority"] == 0){
             dd.httpRequest({
-              url: 'https://yz-znpk.966599.com/getManagerInfo/',
+              url: 'https://localhost:8080/getManagerInfo/',
               method: 'GET',
               headers: { 'Authorization' : 'Bearer ' + res.data["token"] },
               timeout: 30000,
@@ -671,7 +671,7 @@ Page({
           }else if(res.data.data["authority"] == 1){
             // console.log(99)
             dd.httpRequest({
-              url: 'https://yz-znpk.966599.com/getDealerList/',
+              url: 'https://localhost:8080/getDealerList/',
               method: 'GET',
               headers: { 'Authorization' : 'Bearer ' + res.data["token"] },
               timeout: 30000,
@@ -761,7 +761,7 @@ Page({
           }else if(res.data.data["authority"] == 2){
             let ManagerList ;
             dd.httpRequest({
-              url: 'https://yz-znpk.966599.com/getAreaManagerList/',
+              url: 'https://localhost:8080/getAreaManagerList/',
               method: 'GET',
               headers: { 'Authorization' : 'Bearer ' + res.data["token"] },
               timeout: 30000,
@@ -771,7 +771,7 @@ Page({
               }
             });
             dd.httpRequest({
-              url: 'https://yz-znpk.966599.com/getAreaDealerList/',
+              url: 'https://localhost:8080/getAreaDealerList/',
               method: 'GET',
               headers: { 'Authorization' : 'Bearer ' + res.data["token"] },
               timeout: 30000,
@@ -849,7 +849,7 @@ Page({
           }else if(res.data.data["authority"] == 3 || res.data.data["authority"] == -1){
             let ManagerList ;
             dd.httpRequest({
-              url: 'https://yz-znpk.966599.com/getAllManagerList/',
+              url: 'https://localhost:8080/getAllManagerList/',
               method: 'GET',
               headers: { 'Authorization' : 'Bearer ' + res.data["token"] },
               timeout: 30000,
@@ -860,7 +860,7 @@ Page({
               }
             });
             dd.httpRequest({
-              url: 'https://yz-znpk.966599.com/getAllDealerList/',
+              url: 'https://localhost:8080/getAllDealerList/',
               method: 'GET',
               headers: { 'Authorization' : 'Bearer ' + res.data["token"] },
               timeout: 30000,
