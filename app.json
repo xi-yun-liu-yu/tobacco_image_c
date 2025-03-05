@@ -1,0 +1,14 @@
+{
+  "pages": [
+    "pages/login/login",
+    "pages/workbench/workbench",
+    "pages/setting/setting",
+    "pages/index/index",
+    "pages/getHistroy/getHistroy",
+    "pages/getHistroy2/getHistroy2",
+    "pages/supervise/supervise"
+  ],
+  "window": {
+    "defaultTitle": "智能盘库"
+  }
+}

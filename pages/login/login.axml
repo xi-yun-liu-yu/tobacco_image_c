@@ -1,0 +1,70 @@
+<view class="page" ></view>
+<scroll-view class="main" scroll-y = "true">
+  <view id="head">
+    <image id = "tobaccoImage" mode="aspectFit" src="/pages/image/tobacco.png" />
+    <text id = "name1">中国烟草</text>
+    <text id = "name2">以图识数 智能盘库</text>
+  </view>
+  
+
+  <form onSubmit="{{loginType}}" id="from">
+    <view id = "account">
+      <text id="rejrster" onTap = "{{rejrsterTap}}">{{rejrsterText}}</text>
+      <input id = "accountInput" placeholder="账号" name="account" value="{{accountValue}}" onBlur="lostFocus"/>
+      <image id = "accountImage" mode="aspectFit" src="{{account}}" />
+    </view>
+    <view id = "code">
+      <input id = "codeInput" placeholder="密码" name="code" password= "{{isPassword}}" value="{{codeValue}}" onBlur="lostFocus"/>
+      <image id = "codeImage" mode="aspectFit" src="{{code}}"/>
+    </view>
+
+    <view id="agree" >
+      <view id="checkbox">
+        <checkbox-group onChange="agree">
+          <view>
+            <label>
+              <checkbox value="agree" id="checkbox_icon" color="bule" checked = {{agree}} ></checkbox>
+              <text id="agreeText">我已阅读并同意</text>
+            </label>
+          </view>
+        </checkbox-group>
+      </view>
+      <text id="protocolText" onTap = "protocol">隐私协议</text>
+    </view> 
+
+    <button id="login" form-type="submit" >{{loginButtonText}}</button>
+  </form>
+  
+  
+  
+  
+</scroll-view>
+
+<view id="box" a:if="{{protocolWindow}}">
+  <view id="close-btn" onTap="closeProtocolWindow">×</view>
+  <scroll-view id="table_container"  scroll-y = true>
+    <text>
+      我是一个可滑动视图。
+
+      我想要一份隐私协议装在这
+
+       (-^〇^-) 
+
+      4   
+    </text>
+  </scroll-view>
+  <view id="boxButton">
+    <button class="isAgreeButton" onTap="unAgreeButton">不同意</button>
+    <button class="isAgreeButton" onTap="agreeButton">同意</button>
+  </view>
+  
+</view>
+
+<view id="box2" a:if="{{rejrsterWindow}}">
+  <view id="close-btn" onTap="closeRejrsterWindow">×</view>
+  <scroll-view id="box2table_container"  scroll-y = true>
+    <text id="box2Tilite">注册提示</text>
+    <rich-text nodes="{{nodes}}" id="box2Text">
+    </rich-text>
+  </scroll-view>  
+</view>

@@ -1,0 +1,481 @@
+<view class="up_show">
+  <view class="user_ID" a:if="{{authority == 0}}">{{name}}</view>
+  <view class="user_ID" a:if="{{authority > 0 || authority == -1 }}">
+    <view class="menu2" onTap="checkMenu2">
+      <text class="menuText">{{theChoose}}</text>
+      <view class="{{delta2}}"></view>
+    </view>
+  </view>
+  <!-- <image id="exit" mode="aspectFit" src="/pages/image/exit.png" onTap = "exit"/> -->
+  <view class="menu" onTap="checkMenu">
+    <!-- <text class="menuText">{{menuText}}</text> -->
+    <view class="{{delta}}"></view>
+  </view>
+</view>
+
+<view a:if="{{ customerChoose }}">
+  <view class="overlay"></view>
+  <view class="tabBox" >
+    <view class="close-btn" onTap="closeCustomerMenu">×</view>
+    <view class="xuanzekehu">
+      <input id="searchInput" onInput="kaishixuanzekehu" onFocus="chooseType" placeholder="请输入搜索关键词" />
+      <view class="dropdown-list">
+          <view a:for="{{ filteredcustomerList }}" a:key="id" onTap="shaixuanliebiao" data-id="{{ item.Id_dealer }}">
+              {{ item.name_dealer }}
+          </view>
+          <view a:if="{{ filteredcustomerList.length === 0 }}" class="empty-message">暂无匹配项</view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view id="chooseBox" a:if="{{needChange}}">
+    <view class="chooseFloor {{coloer1}}" onTap="chooseMenu" data-index = "1">处理前柜</view>
+    <view class="chooseFloor {{coloer2}}" onTap="chooseMenu" data-index = "2">处理背柜</view>
+    <view class="chooseFloor {{coloer3}}" onTap="chooseMenu" data-index = "3">处理底柜</view>
+    <view class="chooseFloor {{coloer4}}" onTap="chooseMenu" data-index = "4">处理推烟器</view>
+    <view class="chooseFloor {{coloer5}}" onTap="chooseMenu" data-index = "5">查看总计</view>
+</view>
+
+<!-- 前柜 -->
+<view class="{{hasMask ? 'preventTouchMove' : ' '}}" a:if="{{qian}}">
+  <view id = "main" >
+    <view id="rock"></view>
+    <view class="img_container">
+      <text class="page-title" onTap="checkMenu">前柜图片</text>
+      <view class="page">
+        
+        <view class="page-section">
+          <view class="page-section-demo">
+            <swiper
+              onChange="swiperChange_01"
+              current="{{current_01}}"
+              class="demo-swiper"
+              indicator-dots="{{indicatorDots}}"
+              autoplay="{{autoplay}}"
+              vertical="{{vertical}}"
+              interval="{{interval}}"
+              circular="{{circular}}"
+              aspectRatio ="{{aspectRatio}}"
+            >
+              <block a:for="{{path_01}}">
+                <swiper-item key="swiper-item-{{index}}" class="member" >
+                  <image class="image1" mode="scaleToFill" src="{{item}}" /> 
+                </swiper-item>
+              </block>
+            </swiper>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="button_container">
+      <button class="history_bt" onTap="getResults_01">{{Text_01}}</button>
+      <button class="history_bt" id = "{{displayClass_01}}" onTap="deleteImage_01">删除</button>
+      <button class="history_bt" data-button-id="1" onTap="chooseAndPreviewImage">拍照</button>
+    </view>
+    <view class="overlay" a:if="{{table_01 || addRecord}}" ></view>
+
+    <view class="tabBox" a:if="{{table_01}}">
+      <view class="close-btn" onTap="getResults_01">×</view>
+      <view class="top row" >
+        <text class="ntt">品规名称</text>
+        <text class="tt">包数量</text>
+        <text class="tt">条数量</text>
+      </view>
+      <!-- <view class="tabB"> -->
+        <scroll-view class="table_container" scroll-y = true scroll-into-view = "top">
+          <block a:for="{{showList_01}}" a:key="index" >
+            <view class="row">
+              <button class="nameCell {{index % 2 === 0 ? 'even' : 'odd'}}" onTap="edit_01" data-index1 = {{index}} data-index2 = -1>{{item.key}}</button>
+              <button class="numCell {{index % 2 === 0 ? 'even' : 'odd'}}" onTap="edit_01" data-index1 = {{index}} data-index2 = 0>{{item.value[0]}}</button>
+              <button class="numCell {{index % 2 === 0 ? 'even' : 'odd'}}" onTap="edit_01" data-index1 = {{index}} data-index2 = 1>{{item.value[1]}}</button>
+            </view>
+          </block>
+          <view class="row">
+            <button class="nameCell {{rowNum01 % 2 === 0 ? 'even' : 'odd'}}" onTap="needAdd" data-index = 1>添加品规</button>
+          </view>
+        </scroll-view>
+      <!-- </view> -->
+    </view>
+  </view>
+</view>
+
+<view a:if="{{editing_01}}" >
+
+  <view class="overlay"></view>
+  <view class="loading-container2"  >
+    
+  </view>
+
+  <view class="box {{backColoer}}">
+    <view class="close-btn" onTap="unEdit_01">×</view>
+    <view id="vName">
+      <text class="vNameText">{{vName}}</text>
+    </view>
+    
+    <form id="changeNum" onSubmit="saveChange_01">
+      <input name="num" id="editIput" type="text" placeholder="请输入" oninput="inputHandler" value="{{inputValue}}" onFocus= "inputNum" />
+      <text class="prooductUnit">{{prooductUnit}}</text>
+      <button class="history_bt" id = "save" form-type="submit" onTap="unEdit_01">保存</button>
+    </form>
+  </view>
+
+  <view id="picker" a:if="{{inputFocus}}">
+    <picker-view value="{{value}}" onChange="pickerOnChange" >
+      <picker-view-column>
+        <view a:for="{{columArray}}" a:for-index="index" a:for-item="item">{{item}}</view>
+      </picker-view-column>
+    </picker-view>
+  </view>
+</view>
+
+<!-- 后柜 -->
+<view class="{{hasMask ? 'preventTouchMove' : ' '}}" a:if="{{bei}}">
+  <view id = "main" >
+    <view id="rock"></view>
+    <view class="img_container">
+      <text class="page-title" onTap="checkMenu">背柜图片</text>
+      <view class="page">
+        
+        <view class="page-section">
+          <view class="page-section-demo">
+            <swiper
+              onChange="swiperChange_02"
+              current="{{current_02}}"
+              class="demo-swiper"
+              indicator-dots="{{indicatorDots}}"
+              autoplay="{{autoplay}}"
+              vertical="{{vertical}}"
+              interval="{{interval}}"
+              circular="{{circular}}"
+              aspectRatio ="{{aspectRatio}}"
+            >
+              <block a:for="{{path_02}}">
+                <swiper-item key="swiper-item-{{index}}" class="member" >
+                  <image class="image1" mode="scaleToFill" src="{{item}}" /> 
+                </swiper-item>
+              </block>
+            </swiper>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="button_container">
+      <button class="history_bt" onTap="getResults_02">{{Text_02}}</button>
+      <button class="history_bt" id = "{{displayClass_02}}" onTap="deleteImage_02">删除</button>
+      <button class="history_bt" data-button-id="2" onTap="chooseAndPreviewImage">拍照</button>
+    </view>
+
+    <view class="overlay" a:if="{{table_02}}"></view>
+    <view class="tabBox" a:if="{{table_02}}">
+      <view class="close-btn" onTap="getResults_02">×</view>
+      <view class="top row" >
+        <text class="ntt">品规名称</text>
+        <text class="tt">包数量</text>
+        <text class="tt">条数量</text>
+      </view>
+      
+      <scroll-view class="table_container" scroll-y = true scroll-into-view = "top">
+        
+        <block a:for="{{showList_02}}" a:key="index" >
+          <view class="row">
+            <button class="nameCell {{index % 2 === 0 ? 'even' : 'odd'}}" onTap="edit_02" data-index1 = {{index}} data-index2 = -1>{{item.key}}</button>
+            <button class="numCell {{index % 2 === 0 ? 'even' : 'odd'}}" onTap="edit_02" data-index1 = {{index}} data-index2 = 0>{{item.value[0]}}</button>
+            <button class="numCell {{index % 2 === 0 ? 'even' : 'odd'}}" onTap="edit_02" data-index1 = {{index}} data-index2 = 1>{{item.value[1]}}</button>
+          </view>
+        </block>
+        <view class="row">
+          <button class="nameCell {{rowNum02 % 2 === 0 ? 'even' : 'odd'}}" onTap="needAdd" data-index = 1>添加品规</button>
+        </view>
+      </scroll-view>
+    </view>
+
+  </view>
+</view>
+
+<view a:if="{{editing_02}}">
+
+  <view class="overlay"></view>
+  <!-- <view class="loading-container2"  >
+    
+  </view> -->
+
+  <view class="box {{backColoer}}">
+    <view class="close-btn" onTap="unEdit_02">×</view>
+    <view id="vName">
+      <text class="vNameText">{{vName}}</text>
+    </view>
+    
+    <form id="changeNum" onSubmit="saveChange_02">
+      <input name="num" id="editIput" type="text" placeholder="请输入" oninput="inputHandler" value="{{inputValue}}" onFocus= "inputNum" />
+      <text class="prooductUnit">{{prooductUnit}}</text>
+      <button class="history_bt" id = "save" form-type="submit" onTap="unEdit_02">保存</button>
+    </form>
+  </view>
+
+  <view id="picker" a:if="{{inputFocus}}">
+    <picker-view value="{{value}}" onChange="pickerOnChange" >
+      <picker-view-column>
+        <view a:for="{{columArray}}" a:for-index="index" a:for-item="item">{{item}}</view>
+      </picker-view-column>
+    </picker-view>
+  </view>
+</view>
+
+
+<!-- 底柜 -->
+<view class="{{hasMask ? 'preventTouchMove' : ' '}}" a:if="{{di}}">
+  <view id = "main" >
+    <view id="rock"></view>
+    <view class="img_container">
+      <text class="page-title" onTap="checkMenu">底柜图片</text>
+      <view class="page">
+        
+        <view class="page-section">
+          <view class="page-section-demo">
+            <swiper
+              onChange="swiperChange_03"
+              current="{{current_03}}"
+              class="demo-swiper"
+              indicator-dots="{{indicatorDots}}"
+              autoplay="{{autoplay}}"
+              vertical="{{vertical}}"
+              interval="{{interval}}"
+              circular="{{circular}}"
+              aspectRatio ="{{aspectRatio}}"
+            >
+              <block a:for="{{path_03}}">
+                <swiper-item key="swiper-item-{{index}}" class="member" >
+                  <image class="image1" mode="scaleToFill" src="{{item}}" /> 
+                </swiper-item>
+              </block>
+            </swiper>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="button_container">
+      <button class="history_bt" onTap="getResults_03">{{Text_03}}</button>
+      <button class="history_bt" id = "{{displayClass_03}}" onTap="deleteImage_03">删除</button>
+      <button class="history_bt" data-button-id="3" onTap="chooseAndPreviewImage">拍照</button>
+    </view>
+    <view class="overlay" a:if="{{table_03}}"></view>
+    <view class="tabBox" a:if="{{table_03}}">
+      <view class="close-btn" onTap="getResults_03">×</view>
+      <view class="top row" >
+        <text class="ntt">品规名称</text>
+        <text class="tt">包数量</text>
+        <text class="tt">条数量</text>
+      </view>
+      
+      <scroll-view class="table_container" scroll-y = true scroll-into-view = "top">
+
+        <block a:for="{{showList_03}}" a:key="index" >
+          <view class="row">
+            <button class="nameCell {{index % 2 === 0 ? 'even' : 'odd'}}" onTap="edit_03" data-index1 = {{index}} data-index2 = -1>{{item.key}}</button>
+            <button class="numCell {{index % 2 === 0 ? 'even' : 'odd'}}" onTap="edit_03" data-index1 = {{index}} data-index2 = 0>{{item.value[0]}}</button>
+            <button class="numCell {{index % 2 === 0 ? 'even' : 'odd'}}" onTap="edit_03" data-index1 = {{index}} data-index2 = 1>{{item.value[1]}}</button>
+          </view>
+        </block>
+        <view class="row">
+          <button class="nameCell {{rowNum03 % 2 === 0 ? 'even' : 'odd'}}" onTap="needAdd" data-index = 1>添加品规</button>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+</view>
+
+<view a:if="{{editing_03}}">
+
+  <view class="overlay"></view>
+  <!-- <view class="loading-container2"  >
+    
+  </view> -->
+
+  <view class="box {{backColoer}}">
+    <view class="close-btn" onTap="unEdit_03">×</view>
+    <view id="vName">
+      <text class="vNameText">{{vName}}</text>
+    </view>
+    
+    <form id="changeNum" onSubmit="saveChange_03">
+      <input name="num" id="editIput" type="text" placeholder="请输入" oninput="inputHandler" value="{{inputValue}}" onFocus= "inputNum" />
+      <text class="prooductUnit">{{prooductUnit}}</text>
+      <button class="history_bt" id = "save" form-type="submit" onTap="unEdit_03">保存</button>
+    </form>
+  </view>
+
+  <view id="picker" a:if="{{inputFocus}}">
+    <picker-view value="{{value}}" onChange="pickerOnChange" >
+      <picker-view-column>
+        <view a:for="{{columArray}}" a:for-index="index" a:for-item="item">{{item}}</view>
+      </picker-view-column>
+    </picker-view>
+  </view>
+</view>
+
+<!-- 推烟器 -->
+<view class="{{hasMask ? 'preventTouchMove' : ' '}}" a:if="{{tui}}">
+  <view id = "main" >
+    <view id="rock"></view>
+    <view class="img_container">
+      <text class="page-title " onTap="checkMenu">推烟器图片</text>
+      <view class="page">
+        
+        <view class="page-section">
+          <view class="page-section-demo">
+            <swiper
+              onChange="swiperChange_04"
+              current="{{current_04}}"
+              class="demo-swiper"
+              indicator-dots="{{indicatorDots}}"
+              autoplay="{{autoplay}}"
+              vertical="{{vertical}}"
+              interval="{{interval}}"
+              circular="{{circular}}"
+              aspectRatio ="{{aspectRatio}}"
+            >
+              <block a:for="{{path_04}}">
+                <swiper-item key="swiper-item-{{index}}" class="member" >
+                  <image class="image1" mode="scaleToFill" src="{{item}}" /> 
+                </swiper-item>
+              </block>
+            </swiper>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="button_container">
+      <button class="history_bt" onTap="getResults_04">{{Text_04}}</button>
+      <button class="history_bt" id = "{{displayClass_04}}" onTap="deleteImage_04">删除</button>
+      <button class="history_bt" data-button-id="4" onTap="chooseAndPreviewImage">拍照</button>
+    </view>
+    <view class="overlay" a:if="{{table_05}}"></view>
+    <view class="tabBox" a:if="{{table_05}}">
+      <view class="close-btn" onTap="getResults_04">×</view>
+      <view class="top row" >
+        <text class="ntt">品规名称</text>
+        <text class="tt">包数量</text>
+        <text class="tt">条数量</text>
+      </view>
+      
+      <scroll-view class="table_container" scroll-y = true scroll-into-view = "top">
+
+        <block a:for="{{showList_04}}" a:key="index" >
+          <view class="row">
+            <button class="nameCell {{index % 2 === 0 ? 'even' : 'odd'}}" onTap="edit_04" data-index1 = {{index}} data-index2 = -1>{{item.key}}</button>
+            <button class="numCell {{index % 2 === 0 ? 'even' : 'odd'}}" onTap="edit_04" data-index1 = {{index}} data-index2 = 0>{{item.value[0]}}</button>
+            <button class="numCell {{index % 2 === 0 ? 'even' : 'odd'}}" onTap="edit_04" data-index1 = {{index}} data-index2 = 1>{{item.value[1]}}</button>
+          </view>
+        </block>
+        <view class="row">
+          <button class="nameCell {{rowNum04 % 2 === 0 ? 'even' : 'odd'}}" onTap="needAdd" data-index = 1>添加品规</button>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+</view>
+
+<view a:if="{{editing_04}}">
+
+  <view class="overlay"></view>
+  <!-- <view class="loading-container2"  >
+    
+  </view> -->
+
+  <view class="box {{backColoer}}">
+    <view class="close-btn" onTap="unEdit_04">×</view>
+    <view id="vName">
+      <text class="vNameText">{{vName}}</text>
+    </view>
+    
+    <form id="changeNum" onSubmit="saveChange_04">
+      <input name="num" id="editIput" type="text" placeholder="请输入" oninput="inputHandler" value="{{inputValue}}" onFocus= "inputNum" />
+      <text class="prooductUnit">{{prooductUnit}}</text>
+      <button class="history_bt" id = "save" form-type="submit" onTap="unEdit_04">保存</button>
+    </form>
+  </view>
+
+  <view id="picker" a:if="{{inputFocus}}">
+    <picker-view value="{{value}}" onChange="pickerOnChange" >
+      <picker-view-column>
+        <view a:for="{{columArray}}" a:for-index="index" a:for-item="item">{{item}}</view>
+      </picker-view-column>
+    </picker-view>
+  </view>
+</view>
+
+<view class="{{hasMask ? 'preventTouchMove' : ' '}}" a:if="{{zong}}">
+  <view id="rock"></view>
+  <!-- 统计表 -->
+  <view class="img_container"id="zong">
+  <text class="page-title" onTap="checkMenu">统计结果</text>
+  </view>
+  <view class="row" a:if="{{table_04}}" id="top">
+    <text class="ntt">品规名称</text>
+    <text class="tt">包数量</text>
+    <text class="tt">条数量</text>
+  </view>
+  <scroll-view class="table_container" a:if="{{table_04}}" style="height: 100vw;" scroll-y = true scroll-into-view = "top">
+    <block a:for="{{resultsList}}" a:key="index" >
+      <view class="row">
+        <button class="nameCell {{index % 2 === 0 ? 'even' : 'odd'}}" >{{item.key}}</button>
+        <button class="numCell {{index % 2 === 0 ? 'even' : 'odd'}}" data-index1 = {{index}} data-index2 = 0>{{item.value[0]}}</button>
+        <button class="numCell {{index % 2 === 0 ? 'even' : 'odd'}}" data-index1 = {{index}} data-index2 = 1>{{item.value[1]}}</button>
+      </view>
+    </block>
+  </scroll-view>
+
+  <!-- 上传结果 -->
+  <view class="button_container">
+    <button class="history_bt" onTap="uploaddata">上传结果</button>
+  </view>
+</view>
+
+<view class="addBox" a:if="{{addRecord}}">
+  <view class="close-btn" onTap="exitAdd">×</view>
+  <form class="add" onSubmit = "add">
+    <view class="addName">
+      <text class="addNameText">品规：</text>
+      <text class="addNameBHtton" onTap="addNameShow">{{addNameText}}</text>
+      <!-- <input name="name" class="addNameInput" type="text" placeholder="填入品规名称" oninput="addnputHandler" onFocus= "inputNum" /> -->
+    </view>
+    <view class="addNum">
+      <text class="addNameText">包数量：</text>
+      <input name="packet" class="addNumInput" type="text"  oninput="addnputHandler" onFocus= "inputNum" value=0 />
+      <text class="addNameText">条数量：</text>
+      <input name="bars" class="addNumInput" type="text"  oninput="addnputHandler" onFocus= "inputNum" value=0 />
+    </view>
+    <view>
+      <button class="history_bt" id = "addButtom" form-type="submit" onTap="exitAdd" data-index = 1>添加</button>
+    </view>
+  </form>
+</view>
+
+<view a:if="{{ addNameChoose }}">
+  <view class="overlay"></view>
+  <view class="tabBox" >
+    <view class="close-btn" onTap="addNameClose">×</view>
+    <view class="xuanzekehu">
+      <input id="searchInput" onInput="addName" placeholder="请输入搜索关键词" />
+      <view class="dropdown-list">
+          <view a:for="{{ filteredOptions }}" a:key="id" onTap="addNameNeed" data-id="{{ item.Id_type }}">
+              {{ item.name_type }}
+          </view>
+          <view a:if="{{ filteredOptions.length === 0 }}" class="empty-message">暂无匹配项</view>
+      </view>
+    </view>
+  </view>
+</view>
+  
+<!-- 加载中 -->
+<view class="container" a:if="{{loader}}">
+  <view class="overlay"></view>
+  <view class="loading-container">
+    <view class="loading"></view>
+  </view>
+  <text class="lode-txt">上传中....</text>
+</view>
+
+
+

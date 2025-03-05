@@ -1,0 +1,87 @@
+<view class="up_show">
+  <view class="user_ID" a:if="{{authority <= 0}}">{{name}}</view>
+  <view class="user_ID" a:if="{{authority >= 1}}">
+    <view class="menu2" onTap="checkMenu2">
+      <text class="menuText">{{theChoose}}</text>
+      <view class="{{delta2}}"></view>
+    </view>
+  </view>
+
+  <view class="user_ID" id="go" plain = true onTap="query">查询</view>
+
+  <view a:if="{{ customerChoose }}">
+    <view class="overlay"></view>
+    <view class="tabBox" >
+      <view class="close-btn" onTap="closeCustomerMenu" >×</view>
+      <view class="xuanzekehu">
+        <input id="searchInput" onInput="kaishixuanzekehu" onFocus="chooseType" placeholder="请输入搜索关键词" />
+        <view class="dropdown-list">
+            <view a:for="{{ filteredcustomerList }}" a:key="id" onTap="shaixuanliebiao" data-id="{{ item.Id_dealer }}">
+                {{ item.name_dealer }}
+            </view>
+            <view a:if="{{ filteredcustomerList.length === 0 }}" class="empty-message">暂无匹配项</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view>
+  <view id="rock"></view>
+</view>
+
+<view class="dateWindow">
+  <text class="dateText" onTap="chooseDate" data-index = 1>{{date1Text}}</text>
+
+  <text class="dateText2">到</text>
+
+  <text class="dateText" onTap="chooseDate" data-index = 2>{{date2Text}}</text>
+</view>
+
+<view class="tabB" a:if="{{ haveData }}">
+  <view class="top row" >
+    <text class="rq">客户编码</text>
+    <text class="zp">上传日期</text>
+    <text class="xq">照片数</text>
+  </view>
+
+  <scroll-view class="table_container" scroll-y = true scroll-into-view = "top">
+    <block a:for="{{historyData}}" a:key="index" >
+      <view class="row">
+        <text class="nameCell {{index % 2 === 0 ? 'even' : 'odd'}} {{index ===  historyData.length - 1 ? 'endCell' : ''}}" data-date = {{item[1]}} onTap="details">{{item[0]}}</text>
+        <text class="numCell {{index % 2 === 0 ? 'even' : 'odd'}} {{index ===  historyData.length - 1 ? 'endCell' : ''}}" data-date = {{item[1]}} onTap="details">{{item[1]}}</text>
+        <text class="xqCell {{index % 2 === 0 ? 'even' : 'odd'}} {{index ===  historyData.length - 1 ? 'endCell' : ''}}" data-date = {{item[1]}} onTap="details">{{item[2]}}</text>
+      </view>
+    </block>
+  </scroll-view>
+
+  <view class="top row" >
+    <text class="sczj">上传次数总计</text>
+    <text class="zpzj">照片数量总计</text>
+  </view>
+  <view class="top row" >
+    <text class="sczjCell endCell">{{uploadFrequency}}</text>
+    <text class="zpzjCell endCell">{{photoSum}}</text>
+  </view>
+</view>
+
+<view class="tabBox" a:if="{{details}}">
+  <view class="close-btn" onTap="exitDetail">×</view>
+  <view class="top row" style="padding-top: 5vw" >
+    <text class="ntt">品规名称</text>
+    <text class="tt">包数量</text>
+    <text class="tt">条数量</text>
+  </view>
+  <view class="tab">
+    <scroll-view class="table_container" >
+      <block a:for="{{detailsList}}" a:key="index" >
+        <view class="row">
+          <text class="nameCell {{index % 2 === 0 ? 'even' : 'odd'}} {{index ===  detailsList.length - 1 ? 'endCell' : ''}}">{{item["name_type"]}}</text>
+          <text class="numCell {{index % 2 === 0 ? 'even' : 'odd'}} {{index ===  detailsList.length - 1 ? 'endCell' : ''}}">{{item["packets"]}}</text>
+          <text class="xqCell {{index % 2 === 0 ? 'even' : 'odd'}} {{index ===  detailsList.length - 1 ? 'endCell' : ''}}">{{item["bars"]}}</text>
+        </view>
+      </block>
+    </scroll-view>
+
+  </view>
+</view>

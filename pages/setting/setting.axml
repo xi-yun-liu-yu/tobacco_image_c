@@ -1,0 +1,4 @@
+<view>
+  <button type="warn" id="exit" onTap="exit">退出登录</button>
+  
+</view>

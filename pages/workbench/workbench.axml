@@ -1,0 +1,27 @@
+<view id="head">
+  <image id="background" mode="aspectFill" src="/pages/image/workbench-background.png"/>
+  <image id="setting" mode="aspectFit" src="/pages/image/setting.png" onTap = "goSetting"/>
+  <text id="headText">{{name}}</text>
+  <!-- <text id="holle">您好！</text> -->
+  <view id="headText2">
+    <text id="headText3">{{greeting}}</text>
+    <!-- <text id="headText3">您好！</text> -->
+  </view>
+  
+</view>
+
+<view id="box">
+  <view  id="up" class="choose" onTap="up" >
+    <text class="boxText">图片盘库</text>
+  </view>
+  <view id="down" class="choose"onTap="down">
+    <text class="boxText">客户记录</text>
+  </view>
+  <view id="work" class="choose"onTap="work" a:if="{{ authority > 0 }}">
+    <text class="boxText">经理记录</text>
+  </view>
+  <view id="supervise" class="choose"onTap="supervise" a:if="{{ authority > 0 }}">
+    <text class="boxText">统计查询</text>
+  </view>
+</view>
+

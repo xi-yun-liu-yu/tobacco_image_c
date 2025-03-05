@@ -1,0 +1,214 @@
+#tobaccoImage{
+  width: 50vw;
+  height: 50vw;
+}
+.page {
+
+  width: 100%;
+  height: 100vh;
+  background-image: url('/pages/image/background.jpg');
+  background-size: cover;
+  background-position: center; 
+  background-repeat: no-repeat; 
+  z-index: 0;
+}
+.main{
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items:center;
+  justify-content: space-evenly;
+}
+#head{
+  display: flex;
+  flex-direction: column;
+  align-items:center;
+  gap: 5vw;
+  justify-content: space-evenly;
+}
+#from{
+  /* padding-top: 9vw; */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 5vw;
+  align-items: center;
+  position: relative;
+}
+
+#name1{
+  /* padding: 1vh 0; */
+  width: 100%;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: bold;
+  font-family: "黑体";
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+}
+#name2{
+  width: 100%;
+  text-align: center;
+  font-size: 0.6rem;
+  font-weight: bold;
+  font-family: "黑体";
+}
+#account{
+  display: flex;
+  align-items: center;
+  position: relative;
+  flex-direction: column;
+  width: 100%;
+}
+#code{
+  display: flex;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+}
+input{
+  width: 60%;
+  height: 10vw;
+  border: none;
+  border-radius: 1rem;
+  font-size: 5vw;
+  padding: 2% 5% 2% 16%;
+  background: white;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+}
+#accountImage{
+  position: absolute;
+  left: 13%;
+  top: 36%;
+  width: 11vw;
+  height: 11vw;
+}
+#codeImage{
+  position: absolute;
+  left: 13%;
+  top: 11%;
+  width: 11vw;
+  height: 11vw;
+}
+
+#checkbox{
+  width: 138px;
+}
+
+#protocolText{
+  color: rgb(18 58 170);
+  padding-bottom: 2px;
+}
+
+#agree{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+#checkbox_icon {
+  border: 2px solid #000; 
+  border-radius: 3px; 
+}
+
+#box {
+  width: 80%;
+  height: 60%;
+  background-color: #ffffff;
+  border-radius: 20px;
+  position: fixed;
+  top: 43%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
+  padding: 20px 30px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items:center;
+  justify-content:space-around;
+  z-index: 3;
+}
+
+#box2 {
+  width: 65%;
+  height: 55%;
+  background-color: #ffffff;
+  border-radius: 20px;
+  position: fixed;
+  top: 43%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.5);
+  padding: 20px 30px;
+  /* box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items:center;
+  justify-content:space-around; */
+  z-index: 3;
+}
+
+#close-btn {
+  position: absolute;
+  top: 0.1rem;
+  right: 0.3rem;
+  font-size: 0.6rem;
+  color: #333333;
+  border: 0;
+}
+#table_container{
+  height: 70%;
+  width: 90%;
+  padding-top: 30px;
+  padding-bottom: 20px;
+}
+button{
+  background-color: rgb(79, 207, 188); 
+  color: #fff; 
+  border: none;
+  border-radius: 15rpx; 
+  padding: 0rpx 40rpx; 
+  box-shadow: 0 4rpx 10rpx rgba(0,0,0,0.4); 
+}
+#rejrster{
+  margin-left: 34vw;
+  margin-bottom: 1vw;
+  border-bottom: 1px solid rgb(160, 160, 160);
+  color: rgb(160, 160, 160);
+}
+#login{
+  width: 40%;
+  font-size: 0.4rem;
+  font-weight: bold;
+  font-family: "黑体";
+}
+.isAgreeButton{
+  width: 40%;
+  font-size: 0.35rem;
+  font-family: "黑体";
+}
+#boxButton{
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+#box2Tilite{
+  font-size: 6vw;
+  font-weight: bold;
+  margin-bottom: 5vw;
+}
+#box2table_container{
+  height: 70%;
+  width: 100%;
+  padding-top: 30px;
+  padding-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
