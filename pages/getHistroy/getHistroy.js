@@ -247,7 +247,7 @@ Page({
       let m2 = d2.getMonth()+1;
       if(this.data.authority <= 0){
         dd.httpRequest({
-          url:  'https://localhost:8080/getInventoryRecords/?earliest_year=' + d1.getFullYear()+'&earliest_mon=' + m1 +"&earliest_day=" + d1.getDate() + "&latest_year=" + d2.getFullYear() + "&latest_mon=" + m2 + "&latest_day=" + d2.getDate(),
+          url:  'https://yz-znpk.966599.com/getInventoryRecords/?earliest_year=' + d1.getFullYear()+'&earliest_mon=' + m1 +"&earliest_day=" + d1.getDate() + "&latest_year=" + d2.getFullYear() + "&latest_mon=" + m2 + "&latest_day=" + d2.getDate(),
           method: 'GET',
           headers:{ 'Authorization' : 'Bearer ' + this.data.token },
           timeout: 30000,
@@ -266,7 +266,7 @@ Page({
         });
       }else if(this.data.authority > 0 && this.data.theChoose != "未选择客户"){
         dd.httpRequest({
-          url:  'https://localhost:8080/getInventoryRecords/?earliest_year=' + d1.getFullYear()+'&earliest_mon=' + m1 +"&earliest_day=" + d1.getDate() + "&latest_year=" + d2.getFullYear() + "&latest_mon=" + m2 + "&latest_day=" + d2.getDate() +"&manager_chosen_dealer=" + this.data.theChooseId,
+          url:  'https://yz-znpk.966599.com/getInventoryRecords/?earliest_year=' + d1.getFullYear()+'&earliest_mon=' + m1 +"&earliest_day=" + d1.getDate() + "&latest_year=" + d2.getFullYear() + "&latest_mon=" + m2 + "&latest_day=" + d2.getDate() +"&manager_chosen_dealer=" + this.data.theChooseId,
           method: 'GET',
           headers:{ 'Authorization' : 'Bearer ' + this.data.token },
           timeout: 30000,
@@ -326,7 +326,7 @@ Page({
         
       //   for(var i = 0; i < list.length; i++){
       //     dd.httpRequest({
-      //       url:  'https://localhost:8080/getInventoryRecords/?earliest_year=' + d1.getFullYear()+'&earliest_mon=' + m1 +"&earliest_day=" + d1.getDate() + "&latest_year=" + d2.getFullYear() + "&latest_mon=" + m2 + "&latest_day=" + d2.getDate() +"&manager_chosen_dealer=" + list[i].Id_dealer,
+      //       url:  'https://yz-znpk.966599.com/getInventoryRecords/?earliest_year=' + d1.getFullYear()+'&earliest_mon=' + m1 +"&earliest_day=" + d1.getDate() + "&latest_year=" + d2.getFullYear() + "&latest_mon=" + m2 + "&latest_day=" + d2.getDate() +"&manager_chosen_dealer=" + list[i].Id_dealer,
       //       method: 'GET',
       //       headers:{ 'Authorization' : 'Bearer ' + this.data.token },
       //       timeout: 30000,

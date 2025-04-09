@@ -63,7 +63,7 @@ Page({
     let currentTime = new Date();
     dd.getStorage({
       key: "time",
-      
+  
       success:(res) => {
         // console.log(res)
         var timeDiff = currentTime.getTime() - res.data;
@@ -200,7 +200,7 @@ Page({
       complete: () => {},
     });
     dd.httpRequest({
-      url: 'https://localhost:8080/register/',
+      url: 'https://yz-znpk.966599.com/register/',
       data: JSON.stringify({ Id_status: acc, password: cod }),
       method: 'POST',
       headers: {  'Content-Type': 'application/json'  },
@@ -213,7 +213,7 @@ Page({
         });
         let id = acc;
         dd.httpRequest({
-          url: 'https://localhost:8080/sign/',
+          url: 'https://yz-znpk.966599.com/sign/',
           data: JSON.stringify({ username: acc, password: cod }),
           
           method: 'POST',
@@ -229,7 +229,7 @@ Page({
             if(res.data["code"] === 0){
               if(res.data.data["authority"] <= 0){
                 dd.httpRequest({
-                  url: 'https://localhost:8080/getManagerInfo/',
+                  url: 'https://yz-znpk.966599.com/getManagerInfo/',
                   method: 'GET',
                   headers: { 'Authorization' : 'Bearer ' + res.data["token"] },
                   timeout: 30000,
@@ -238,8 +238,13 @@ Page({
                     
                     let managerName = "&managerName=" + res.data.data["name_manager"];
                     let managerID = "&managerID=" + res.data.data["Id_manager"];
+                    let nameDirector = "&nameDirector=" + res.data.data["name_director"];
+                    let IdDirector = "&IdDirector=" + res.data.data["Id_director"];
+                    let nameSuper = "&nameSuper=" + res.data.data["name_super"];
+                    let IdSuper = "&IdSuper=" + res.data.data["Id_super"];
+
                     
-                    let url = "/pages/workbench/workbench?customerID="+id+m+token+managerName+managerID+name;
+                    let url = "/pages/workbench/workbench?customerID="+id+m+token+managerName+managerID+name+nameDirector+IdDirector+nameSuper+IdSuper;
                     // console.log(url)
                     dd.redirectTo({
                   
@@ -262,7 +267,7 @@ Page({
               }else if(res.data.data["authority"] == 1){
                 // console.log(99)
                 dd.httpRequest({
-                  url: 'https://localhost:8080/getDealerList/',
+                  url: 'https://yz-znpk.966599.com/getDealerList/',
                   method: 'GET',
                   headers: { 'Authorization' : 'Bearer ' + res.data["token"] },
                   timeout: 30000,
@@ -340,7 +345,7 @@ Page({
               }else if(res.data.data["authority"] == 2){
                 let ManagerList ;
                 dd.httpRequest({
-                  url: 'https://localhost:8080/getAreaManagerList/',
+                  url: 'https://yz-znpk.966599.com/getAreaManagerList/',
                   method: 'GET',
                   headers: { 'Authorization' : 'Bearer ' + res.data["token"] },
                   timeout: 30000,
@@ -350,7 +355,7 @@ Page({
                   }
                 });
                 dd.httpRequest({
-                  url: 'https://localhost:8080/getAreaDealerList/',
+                  url: 'https://yz-znpk.966599.com/getDealerList/',
                   method: 'GET',
                   headers: { 'Authorization' : 'Bearer ' + res.data["token"] },
                   timeout: 30000,
@@ -432,7 +437,7 @@ Page({
               }else if(res.data.data["authority"] == 3){
                 let ManagerList ;
                 dd.httpRequest({
-                  url: 'https://localhost:8080/getAllManagerList/',
+                  url: 'https://yz-znpk.966599.com/getAllManagerList/',
                   method: 'GET',
                   headers: { 'Authorization' : 'Bearer ' + res.data["token"] },
                   timeout: 30000,
@@ -442,7 +447,7 @@ Page({
                   }
                 });
                 dd.httpRequest({
-                  url: 'https://localhost:8080/getAllDealerList/',
+                  url: 'https://yz-znpk.966599.com/getDealerList/',
                   method: 'GET',
                   headers: { 'Authorization' : 'Bearer ' + res.data["token"] },
                   timeout: 30000,
@@ -606,7 +611,7 @@ Page({
     });
     dd.httpRequest({
       // url: 'http://10.11.0.63:8080/sign/',
-      url: 'https://localhost:8080/sign/',
+      url: 'https://yz-znpk.966599.com/sign/',
       //url: 'https://ql.966599.com/api/qsource/9616d09b-f4e1-4078-ad03-9d4fe4967d0a',
 
       data: JSON.stringify({ username: acc, password: cod }),
@@ -635,7 +640,7 @@ Page({
           let token = "&token=" + res.data["token"];
           if(res.data.data["authority"] == 0){
             dd.httpRequest({
-              url: 'https://localhost:8080/getManagerInfo/',
+              url: 'https://yz-znpk.966599.com/getManagerInfo/',
               method: 'GET',
               headers: { 'Authorization' : 'Bearer ' + res.data["token"] },
               timeout: 30000,
@@ -643,8 +648,12 @@ Page({
               success: (res) => {
                 let managerName = "&managerName=" + res.data.data["name_manager"];
                 let managerID = "&managerID=" + res.data.data["Id_manager"];
+                let nameDirector = "&nameDirector=" + res.data.data["name_director"];
+                let IdDirector = "&IdDirector=" + res.data.data["Id_director"];
+                let nameSuper = "&nameSuper=" + res.data.data["name_super"];
+                let IdSuper = "&IdSuper=" + res.data.data["Id_super"];
                 // let name = "&name=" + res.data.data["name_dealer"];
-                let url = "/pages/workbench/workbench?customerID="+id+m+token+managerName+managerID+name;
+                let url = "/pages/workbench/workbench?customerID="+id+m+token+managerName+managerID+name+nameDirector+IdDirector+nameSuper+IdSuper;
                 // console.log(url)
                 dd.redirectTo({
                   url: url,
@@ -671,7 +680,7 @@ Page({
           }else if(res.data.data["authority"] == 1){
             // console.log(99)
             dd.httpRequest({
-              url: 'https://localhost:8080/getDealerList/',
+              url: 'https://yz-znpk.966599.com/getDealerList/',
               method: 'GET',
               headers: { 'Authorization' : 'Bearer ' + res.data["token"] },
               timeout: 30000,
@@ -761,7 +770,7 @@ Page({
           }else if(res.data.data["authority"] == 2){
             let ManagerList ;
             dd.httpRequest({
-              url: 'https://localhost:8080/getAreaManagerList/',
+              url: 'https://yz-znpk.966599.com/getAreaManagerList/',
               method: 'GET',
               headers: { 'Authorization' : 'Bearer ' + res.data["token"] },
               timeout: 30000,
@@ -771,7 +780,7 @@ Page({
               }
             });
             dd.httpRequest({
-              url: 'https://localhost:8080/getAreaDealerList/',
+              url: 'https://yz-znpk.966599.com/getDealerList/',
               method: 'GET',
               headers: { 'Authorization' : 'Bearer ' + res.data["token"] },
               timeout: 30000,
@@ -849,7 +858,7 @@ Page({
           }else if(res.data.data["authority"] == 3 || res.data.data["authority"] == -1){
             let ManagerList ;
             dd.httpRequest({
-              url: 'https://localhost:8080/getAllManagerList/',
+              url: 'https://yz-znpk.966599.com/getAllManagerList/',
               method: 'GET',
               headers: { 'Authorization' : 'Bearer ' + res.data["token"] },
               timeout: 30000,
@@ -860,7 +869,7 @@ Page({
               }
             });
             dd.httpRequest({
-              url: 'https://localhost:8080/getAllDealerList/',
+              url: 'https://yz-znpk.966599.com/getDealerList/',
               method: 'GET',
               headers: { 'Authorization' : 'Bearer ' + res.data["token"] },
               timeout: 30000,

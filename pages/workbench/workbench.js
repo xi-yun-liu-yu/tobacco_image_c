@@ -8,9 +8,13 @@ Page({
     managerName:"",
     name:"",
     customerList:[],
+    Id_director:"",
+    name_director:"",
+    Id_super:"",
+    name_super:"",
   },
   onLoad(e){
-    // console.log(e)
+    console.log(e)
     let currentTime = new Date();
     let hour = currentTime.getHours();
     if(hour >=6 && hour < 9){
@@ -48,6 +52,10 @@ Page({
       this.setData({
         managerID:e["managerID"],
         managerName:e["managerName"],
+        Id_director:e["IdDirector"],
+        name_director:e["nameDirector"],
+        Id_super:e["IdSuper"],
+        name_super:e["nameSuper"],
       })
     }else if(this.data.authority == 1 || this.data.authority == 2 || this.data.authority == 3){
       dd.getStorage({
@@ -76,7 +84,11 @@ Page({
     if(this.data.authority <= 0){
       let managerName = "&managerName=" +  this.data.managerName;
       let managerID = "&managerID=" +  this.data.managerID;
-      let url = "/pages/index/index?customerID="+id+m+token+name+managerName+managerID;
+      let Id_director = "&Id_director=" +  this.data.Id_director;
+      let name_director = "&name_director=" +  this.data.name_director;
+      let Id_super = "&Id_super=" +  this.data.Id_super;
+      let name_super = "&name_super=" +  this.data.name_super;
+      let url = "/pages/index/index?customerID="+id+m+token+name+managerName+managerID+Id_director+name_director+Id_super+name_super;
       dd.navigateTo({
         url: url,
       });

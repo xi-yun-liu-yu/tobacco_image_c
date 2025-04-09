@@ -63,6 +63,10 @@ Page({
     token:"",
     managerID:"",
     managerName:"",
+    Id_director:"",
+    name_director:"",
+    Id_super:"",
+    name_super:"",
     name:"",
     authorityText: "",
     qian:true,
@@ -102,7 +106,8 @@ Page({
 
   onLoad(query) {
     // 页面加载
-    // console.info(`Page onLoad with query: ${JSON.stringify(query)}`);
+    console.info(`Page onLoad with query: ${JSON.stringify(query)}`);
+    console.info(query);
     const colorScheme = dd.canIUse("getColorSchemeSync") ? dd.getColorSchemeSync() : "light";
     if(colorScheme == "light"){
       this.setData({
@@ -120,7 +125,11 @@ Page({
         token: query["token"],
         managerID:query["managerID"],
         managerName:query["managerName"],
-        name:query["name"]
+        name:query["name"],
+        Id_director:query["Id_director"],
+        name_director:query["name_director"],
+        Id_super:query["Id_super"],
+        name_super:query["name_super"],
       })
     }else if(query["authority"] > 0 || query["authority"] == -1){
       this.setData({
@@ -174,7 +183,7 @@ Page({
   onReady() {
     // 页面加载完成
     dd.httpRequest({
-      url:  'https://localhost:8080/getAllProducts/',
+      url:  'https://yz-znpk.966599.com/getAllProducts/',
       data: {},
       method: 'GET',
       headers:{ 'Authorization' : 'Bearer ' + this.data.token },
@@ -886,13 +895,15 @@ Page({
 
   uploadToServer(filePath) {
     return new Promise((resolve, reject) => {
+      console.log(this.data.token)
       dd.uploadFile({
-        url: 'https://localhost:8080/upload/', // 确保URL是正确的
+        url: 'https://yz-znpk.966599.com/upload/', // 确保URL是正确的
         headers: { 'Authorization' : 'Bearer ' + this.data.token },
         fileType: 'image',
         fileName: 'file',
         filePath: filePath,
         success: (res) => {
+          console.log(res)
           try {
             let temp = this.data.sum;
             temp++;
@@ -914,6 +925,8 @@ Page({
             // }
 
             for (let id in data.info) {
+              if(id == "")
+                continue
               let innerObj = data.info[id];
               for (let key in innerObj) {
                 let valueArray = innerObj[key];
@@ -1243,7 +1256,10 @@ Page({
       return;
     };
     s1[index1].value[index2] = parseInt(value);
-    
+    if (parseInt(value) === 0 && s1[index1].value[index2^1] === 0){
+      s1.splice(index1,1)
+    }
+
     
     this.setData({
       showList_01: s1
@@ -1273,7 +1289,9 @@ Page({
       return;
     };
     s1[index1].value[index2] = parseInt(value);
-    
+    if (parseInt(value) === 0 && s1[index1].value[index2^1] === 0){
+      s1.splice(index1,1)
+    }
     
     this.setData({
       showList_02: s1
@@ -1303,7 +1321,9 @@ Page({
       return;
     };
     s1[index1].value[index2] = parseInt(value);
-    
+    if (parseInt(value) === 0 && s1[index1].value[index2^1] === 0){
+      s1.splice(index1,1)
+    }
     
     this.setData({
       showList_03: s1
@@ -1333,7 +1353,9 @@ Page({
       return;
     };
     s1[index1].value[index2] = parseInt(value);
-    
+    if (parseInt(value) === 0 && s1[index1].value[index2^1] === 0){
+      s1.splice(index1,1)
+    }
     
     this.setData({
       showList_04: s1
@@ -1414,6 +1436,10 @@ Page({
         dataPart["name_dealer"] = n;
         dataPart["Id_manager"] = mid;
         dataPart["name_manager"] = mn;
+        dataPart["Id_director"] = this.data.Id_director;
+        dataPart["name_director"] = this.data.name_director;
+        dataPart["Id_super"] = this.data.Id_super;
+        dataPart["name_super"] = this.data.name_super;
         dataPart["Id_type"] = element.value[2];
         dataPart["name_type"] = element.key;
         dataPart["packets"] = element.value[0];
@@ -1429,20 +1455,48 @@ Page({
       });
       console.log(dataArray)
     }else if(this.data.authority > 0 || this.data.authority == -1){
+      // let customer
+      // dd.httpRequest({
+      //   url: 'https://yz-znpk.966599.com/getManagerInfo/',
+      //   method: 'GET',
+      //   headers: { 'Authorization' : 'Bearer ' + this.data.token },
+      //   timeout: 30000,
+      //   success: (res) => {
+      //     const { data, status, headers } = res;
+          
+      //     customer = data
+      //   },
+      //   fail: () => {
+
+      //   },
+      //   complete: () => {},
+      // });
       let n = this.data.theChoose;
       let id = this.data.theChooseId;
-      let mn = this.data.name;
-      let mid = this.data.customerID;
       let sum =  this.data.sum;
+      let customer = this.data.customerList.filter(customerList =>
+        customerList.Id_dealer.includes(id)
+      );
+      console.log(customer)
+      let Id_manager = customer[0].Id_manager;
+      let name_manager = customer[0].name_manager;
+      let Id_director = customer[0].Id_director;
+      let name_director = customer[0].name_director;
+      let Id_super = customer[0].Id_super;
+      let name_super = customer[0].name_super;
       let i = 0;
       
       array.forEach(element => {
         let dataPart = {};
-        dataPart["manager_chosen_dealer"] = this.data.theChooseId;
+        dataPart["manager_ chosen_dealer"] = this.data.theChooseId;
         dataPart["Id_dealer"] = id;
         dataPart["name_dealer"] = n;
-        dataPart["Id_manager"] = mid;
-        dataPart["name_manager"] = mn;
+        dataPart["Id_manager"] = Id_manager;
+        dataPart["name_manager"] = name_manager;
+        dataPart["Id_director"] = Id_director;
+        dataPart["name_director"] = name_director;
+        dataPart["Id_super"] = Id_super;
+        dataPart["name_super"] = name_super;
         dataPart["Id_type"] = element.value[2];
         dataPart["name_type"] = element.key;
         dataPart["packets"] = element.value[0];
@@ -1455,8 +1509,8 @@ Page({
         i++;
       });
     }
-    // console.log(dataArray)
-    // console.log(JSON.stringify(dataArray))
+    console.log(dataArray)
+    console.log(JSON.stringify(dataArray))
     
     dd.confirm({
       title: '上传确认',
@@ -1465,10 +1519,10 @@ Page({
       confirmButtonText: '上传',
       success: (res) => {
         const { confirm } = res;
-        console.log(res)
+        // console.log(res)
         if(confirm){
           dd.httpRequest({
-            url: 'https://localhost:8080/upRecord/',
+            url: 'https://yz-znpk.966599.com/upRecord/',
             method: 'post',
             data: JSON.stringify(dataArray),
             headers: { 'Authorization' : 'Bearer ' + this.data.token },
@@ -1611,7 +1665,7 @@ Page({
   },
 
   chooseMenu:function(index){
-    console.log(index)
+    // console.log(index)
     // let index = e.target.dataset["index"];
     switch(index){
       case 0:
