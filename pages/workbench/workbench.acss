@@ -48,7 +48,7 @@
   z-index: 2;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 50vw 50vw;
+  grid-template-rows: 46vw  46vw ;
 }
 .choose{
   width: 40vw;
@@ -92,6 +92,16 @@
   background-position-x: 90%;
 }
 #supervise{
+  /* top: 30%;
+  left: 51%; */
+  background-image: url('/pages/image/supervise.png'); 
+  background-size: 70%; 
+  background-repeat: no-repeat; 
+  background-position: right bottom; 
+  background-position-y: 90%;
+  background-position-x: 90%;
+}
+#demo{
   /* top: 30%;
   left: 51%; */
   background-image: url('/pages/image/supervise.png'); 

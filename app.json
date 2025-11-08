@@ -6,7 +6,8 @@
     "pages/index/index",
     "pages/getHistroy/getHistroy",
     "pages/getHistroy2/getHistroy2",
-    "pages/supervise/supervise"
+    "pages/supervise/supervise",
+    "pages/demo/demo"
   ],
   "window": {
     "defaultTitle": "智能盘库"

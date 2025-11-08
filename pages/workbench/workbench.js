@@ -146,6 +146,13 @@ Page({
     }
   },
 
+  demo:function(){
+    let url = "/pages/demo/demo";
+    dd.navigateTo({
+      url: url,
+    });
+  },
+
   goSetting:function(){
     let url = "/pages/setting/setting";
     dd.navigateTo({

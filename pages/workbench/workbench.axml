@@ -23,5 +23,8 @@
   <view id="supervise" class="choose"onTap="supervise" a:if="{{ authority > 0 }}">
     <text class="boxText">统计查询</text>
   </view>
+  <view id="demo" class="choose"onTap="demo">
+    <text class="boxText">陈列建议</text>
+  </view>
 </view>
 

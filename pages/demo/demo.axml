@@ -1,0 +1,105 @@
+<!-- pages/cabinetRecognition/cabinetRecognition.axml -->
+<!-- 整体页面滚动视图 -->
+<scroll-view class="page-scroll" scroll-y>
+  <view class="container">
+    <!-- 页面标题 -->
+    <view class="page-title">柜面识别与陈列评分</view>
+    
+    <!-- 图片展示框 -->
+    <view class="image-container">
+      <image 
+        class="display-image" 
+        src="{{displayImage}}" 
+        mode="aspectFit"
+        a:if="{{displayImage}}"
+      ></image>
+      <view class="image-placeholder" a:else>
+        <icon class="placeholder-icon" type="camera" size="48" color="#ccc" />
+        <view class="placeholder-text">点击下方按钮上传图片</view>
+      </view>
+    </view>
+    
+    <!-- 柜面尺寸数据展示 -->
+    <view class="dimension-container" a:if="{{showDimensions}}">
+      <view class="dimension-item">
+        <view class="dimension-label">柜面长度</view>
+        <view class="dimension-value">{{cabinetLength}} m</view>
+      </view>
+      <view class="dimension-item">
+        <view class="dimension-label">柜面宽度</view>
+        <view class="dimension-value">{{cabinetWidth}} m</view>
+      </view>
+    </view>
+    
+    <!-- 陈列评语（支持垂直滚动） -->
+    <view class="comment-container" a:if="{{showComment}}">
+      <view class="comment-label">陈列评语</view>
+      <view class="comment-content scroll-y">
+        {{displayComment}}
+      </view>
+    </view>
+    
+    <!-- 操作按钮区域 -->
+    <view class="button-group">
+      <button 
+        class="primary-button"
+        onTap="handleCabinetRecognition"
+      >
+        柜面识别
+      </button>
+      <button 
+        class="secondary-button"
+        onTap="handleSelectRule"
+        disabled="{{!hasUploadedImage}}"
+      >
+        选择规则
+      </button>
+      <button 
+        class="tertiary-button"
+        onTap="handleDisplayScore"
+      >
+        陈列评分
+      </button>
+    </view>
+  </view>
+</scroll-view>
+
+<!-- 自定义规则选择弹窗 -->
+<!-- 遮罩层 -->
+<view class="modal-overlay" a:if="{{!ruleModalHidden}}" ontap="cancelRuleSelection"></view>
+<!-- 弹窗内容 -->
+<view class="custom-modal" a:if="{{!ruleModalHidden}}">
+  <view class="modal-header">
+    <view class="modal-title">选择陈列规则</view>
+    <icon class="modal-close" type="close" size="24" color="#86909c" ontap="cancelRuleSelection" />
+  </view>
+  <!-- 弹窗滚动内容 -->
+  <scroll-view class="modal-scroll" scroll-y>
+    <view class="rule-content">
+      <view class="rule-group">
+        <view class="rule-title">核心指标（三选一）</view>
+        <radio-group class="radio-group" onChange="handleCoreIndicatorChange">
+          <label class="radio-item" a:for="{{coreIndicators}}" a:key="value">
+            <radio value="{{item.value}}" checked="{{item.checked}}" />
+            <span class="radio-text">{{item.label}}</span>
+          </label>
+        </radio-group>
+      </view>
+      
+      <view class="rule-group">
+        <view class="rule-title">陈列标准（三选一）</view>
+        <radio-group class="radio-group" onChange="handleDisplayStandardChange">
+          <label class="radio-item" a:for="{{displayStandards}}" a:key="value">
+            <radio value="{{item.value}}" checked="{{item.checked}}" />
+            <span class="radio-text">{{item.label}}</span>
+          </label>
+        </radio-group>
+      </view>
+    </view>
+  </scroll-view>
+  <!-- 弹窗底部按钮 -->
+  <view class="modal-footer">
+    <button class="modal-cancel" onTap="cancelRuleSelection">取消</button>
+    <button class="modal-confirm" onTap="confirmRuleSelection">确定</button>
+  </view>
+</view>

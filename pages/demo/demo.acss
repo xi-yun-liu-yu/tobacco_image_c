@@ -1,0 +1,366 @@
+/* pages/cabinetRecognition/cabinetRecognition.acss */
+/* 基础样式 */
+page {
+  background-color: #f5f7fa;
+  position: relative;
+  height: 100%;
+}
+
+/* 整体页面滚动视图 */
+.page-scroll {
+  width: 100%;
+  height: 100vh;
+  padding: 20rpx;
+  box-sizing: border-box;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 30rpx;
+}
+
+/* 页面标题 */
+.page-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #1d2129;
+  text-align: center;
+  margin-bottom: 10rpx;
+}
+
+/* 图片展示框 */
+.image-container {
+  width: 100%;
+  height: 400rpx;
+  background-color: #ffffff;
+  border-radius: 16rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.image-container:hover {
+  box-shadow: 0 6rpx 16rpx rgba(0, 0, 0, 0.08);
+}
+
+.display-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.image-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20rpx;
+  color: #86909c;
+}
+
+.placeholder-icon {
+  opacity: 0.6;
+}
+
+.placeholder-text {
+  font-size: 24rpx;
+}
+
+/* 尺寸数据展示 */
+.dimension-container {
+  display: flex;
+  justify-content: space-around;
+  background-color: #ffffff;
+  border-radius: 12rpx;
+  padding: 24rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.03);
+}
+
+.dimension-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8rpx;
+}
+
+.dimension-label {
+  font-size: 22rpx;
+  color: #86909c;
+}
+
+.dimension-value {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #1d2129;
+}
+
+/* 陈列评语（支持滚动） */
+.comment-container {
+  background-color: #ffffff;
+  border-radius: 12rpx;
+  padding: 24rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.03);
+}
+
+.comment-label {
+  font-size: 24rpx;
+  font-weight: 600;
+  color: #1d2129;
+  margin-bottom: 16rpx;
+}
+
+.comment-content {
+  font-size: 22rpx;
+  color: #4e5969;
+  line-height: 1.6;
+  padding: 16rpx;
+  background-color: #f7f8fa;
+  border-radius: 8rpx;
+  /* 滚动设置 */
+  height: 160rpx;
+  overflow-y: auto;
+  word-break: break-all;
+}
+
+/* 滚动条样式优化 */
+.scroll-y::-webkit-scrollbar {
+  width: 6rpx;
+}
+
+.scroll-y::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3rpx;
+}
+
+.scroll-y::-webkit-scrollbar-thumb {
+  background: #c9cdcf;
+  border-radius: 3rpx;
+}
+
+.scroll-y::-webkit-scrollbar-thumb:hover {
+  background: #86909c;
+}
+
+/* 按钮组 */
+.button-group {
+  display: flex;
+  gap: 20rpx;
+  flex-wrap: wrap;
+}
+
+.button-group button {
+  flex: 1;
+  height: 88rpx;
+  border-radius: 12rpx;
+  font-size: 26rpx;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.primary-button {
+  background-color: #1890ff;
+  color: #ffffff;
+}
+
+.primary-button::after {
+  border: none;
+}
+
+.secondary-button {
+  background-color: #ffffff;
+  color: #1890ff;
+  border: 2rpx solid #1890ff;
+}
+
+.secondary-button::after {
+  border: none;
+}
+
+.secondary-button[disabled] {
+  background-color: #f7f8fa;
+  color: #c9cdcf;
+  border-color: #c9cdcf;
+}
+
+.tertiary-button {
+  background-color: #ffffff;
+  color: #4e5969;
+  border: 2rpx solid #dcdfe6;
+}
+
+.tertiary-button::after {
+  border: none;
+}
+
+/* 自定义弹窗样式 - 关键修复部分 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9998; /* 确保遮罩层在最上层 */
+  backdrop-filter: blur(4rpx);
+}
+
+.custom-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 85%;
+  max-width: 600rpx;
+  background-color: #ffffff;
+  border-radius: 16rpx;
+  box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.15);
+  z-index: 9999; /* 确保弹窗在遮罩层上方 */
+  overflow: hidden;
+  animation: modalFadeIn 0.3s ease;
+}
+
+/* 弹窗动画 */
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -45%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24rpx 32rpx;
+  border-bottom: 2rpx solid #f2f3f5;
+}
+
+.modal-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #1d2129;
+}
+
+.modal-close {
+  cursor: pointer;
+}
+
+.modal-scroll {
+  width: 100%;
+  max-height: 400rpx; /* 限制滚动区域高度 */
+  padding: 32rpx;
+  box-sizing: border-box;
+}
+
+.rule-content {
+  padding: 10rpx 0;
+}
+
+.rule-group {
+  margin-bottom: 30rpx;
+}
+
+.rule-group:last-child {
+  margin-bottom: 0;
+}
+
+.rule-title {
+  font-size: 24rpx;
+  font-weight: 600;
+  color: #1d2129;
+  margin-bottom: 20rpx;
+}
+
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.radio-item {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  font-size: 22rpx;
+  color: #4e5969;
+}
+
+.radio-text {
+  flex: 1;
+}
+
+.modal-footer {
+  display: flex;
+  padding: 16rpx;
+  border-top: 2rpx solid #f2f3f5;
+}
+
+.modal-footer button {
+  flex: 1;
+  height: 72rpx;
+  border-radius: 12rpx;
+  font-size: 24rpx;
+  margin: 0 8rpx;
+}
+
+.modal-cancel {
+  background-color: #f7f8fa;
+  color: #4e5969;
+}
+
+.modal-cancel::after {
+  border: none;
+}
+
+.modal-confirm {
+  background-color: #1890ff;
+  color: #ffffff;
+}
+
+.modal-confirm::after {
+  border: none;
+}
+
+/* 单选框自定义样式 */
+radio {
+  transform: scale(1.4);
+}
+
+radio .wx-radio-input {
+  width: 32rpx;
+  height: 32rpx;
+  border-radius: 50%;
+  border: 2rpx solid #dcdfe6;
+  background-color: #ffffff;
+}
+
+radio .wx-radio-input-checked {
+  border-color: #1890ff !important;
+  background-color: #1890ff !important;
+}
+
+radio .wx-radio-input-checked::before {
+  width: 20rpx;
+  height: 20rpx;
+  border-radius: 50%;
+  background-color: #ffffff;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* 适配小屏幕设备 */
+@media (max-height: 600px) {
+  .modal-scroll {
+    max-height: 300rpx;
+  }
+}
